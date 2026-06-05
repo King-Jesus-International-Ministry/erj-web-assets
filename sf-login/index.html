@@ -7,7 +7,7 @@
 <title>King Jesus Ministry · Staff Sign-In</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #0a0a0a;
@@ -15,6 +15,9 @@
     --muted: rgba(247, 246, 243, 0.56);
     --faint: rgba(247, 246, 243, 0.32);
     --hairline: rgba(247, 246, 243, 0.14);
+    --accent: #1274e7;                       /* King Jesus Ministry brand blue */
+    --accent-bright: #5a9ff4;                /* legible blue for small text */
+    --accent-glow: rgba(18, 116, 231, 0.55);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,7 +27,7 @@
   body {
     background: var(--ink);
     color: var(--paper);
-    font-family: "Archivo", sans-serif;
+    font-family: "Montserrat", sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     position: relative;
@@ -37,7 +40,7 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 90% 60% at 75% -10%, rgba(247,246,243,0.07), transparent 60%),
+      radial-gradient(ellipse 90% 60% at 75% -10%, rgba(40,110,220,0.07), transparent 60%),
       radial-gradient(ellipse 70% 50% at 10% 110%, rgba(247,246,243,0.05), transparent 55%);
     pointer-events: none;
     z-index: 0;
@@ -77,8 +80,8 @@
     top: 50%; left: -3px;
     width: 7px; height: 7px;
     border-radius: 50%;
-    background: rgba(247,246,243,0.85);
-    box-shadow: 0 0 14px 3px rgba(247,246,243,0.45);
+    background: var(--accent);
+    box-shadow: 0 0 16px 3px var(--accent-glow);
   }
 
   @keyframes drift { to { transform: rotate(360deg); } }
@@ -187,7 +190,7 @@
   .meta {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     gap: 0.75rem 1.5rem;
     font-size: 0.72rem;
@@ -198,12 +201,12 @@
   }
 
   .meta a {
-    color: var(--muted);
+    color: var(--accent-bright);
     text-decoration: none;
     transition: color 0.25s ease, letter-spacing 0.25s ease;
   }
   .meta a:hover {
-    color: var(--paper);
+    color: #8cbcf8;
     letter-spacing: 0.2em;
   }
 
@@ -817,7 +820,6 @@
     <footer>
       <p class="mission">&ldquo;Called to bring the supernatural power of God to this generation.&rdquo;</p>
       <div class="meta">
-        <span>Authorized staff only</span>
         <a href="https://kingjesus.org" target="_blank" rel="noopener">kingjesus.org &rarr;</a>
       </div>
     </footer>
