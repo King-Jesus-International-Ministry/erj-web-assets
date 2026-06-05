@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>King Jesus Ministry · Staff Sign-In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --paper: #f7f6f3;
+    --muted: rgba(247, 246, 243, 0.56);
+    --faint: rgba(247, 246, 243, 0.32);
+    --hairline: rgba(247, 246, 243, 0.14);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: "Archivo", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Atmosphere ----------------------------------------------------- */
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 90% 60% at 75% -10%, rgba(247,246,243,0.07), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 10% 110%, rgba(247,246,243,0.05), transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+
+  /* Large circular motif echoing the logo's geometry */
+  .orbit {
+    position: fixed;
+    border: 1px solid rgba(247,246,243,0.22);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orbit-a {
+    width: 130vmin; height: 130vmin;
+    top: -55vmin; right: -45vmin;
+    animation: drift 32s linear infinite;
+  }
+  .orbit-b {
+    width: 70vmin; height: 70vmin;
+    bottom: -30vmin; left: -25vmin;
+    border-color: rgba(247,246,243,0.13);
+    animation: drift 48s linear infinite reverse;
+  }
+  .orbit-a::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: -3px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: rgba(247,246,243,0.85);
+    box-shadow: 0 0 14px 3px rgba(247,246,243,0.45);
+  }
+
+  @keyframes drift { to { transform: rotate(360deg); } }
+
+  /* Layout ---------------------------------------------------------- */
+
+  main {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(1.75rem, 6vw, 4.5rem);
+  }
+
+  /* Brand row */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: rise 1.1s 0.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .mark {
+    width: clamp(52px, 7vw, 68px);
+    height: auto;
+    color: var(--paper);
+    filter: drop-shadow(0 0 28px rgba(247,246,243,0.18));
+    animation: glow 4.5s ease-in-out infinite;
+  }
+
+  @keyframes glow {
+    0%, 100% { filter: drop-shadow(0 0 18px rgba(247,246,243,0.15)); transform: scale(1); }
+    50%      { filter: drop-shadow(0 0 52px rgba(247,246,243,0.5)); transform: scale(1.04); }
+  }
+
+  .brand-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Hero */
+  .hero { max-width: 34ch; }
+
+  h1 {
+    font-family: "Fraunces", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-size: clamp(2.9rem, 7.5vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    animation: rise 1.1s 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .lede {
+    margin-top: clamp(1.4rem, 3.5vh, 2.2rem);
+    font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--muted);
+    animation: rise 1.1s 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .lede strong {
+    color: var(--paper);
+    font-weight: 500;
+  }
+
+  /* Footer */
+  footer {
+    animation: rise 1.1s 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .mission {
+    font-family: "Fraunces", serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 36ch;
+    padding-bottom: clamp(1.2rem, 3vh, 1.8rem);
+    margin-bottom: clamp(1.2rem, 3vh, 1.8rem);
+    position: relative;
+  }
+  .mission::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 1px;
+    background: var(--hairline);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: draw 1.4s 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes draw { to { transform: scaleX(1); } }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .meta a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.25s ease, letter-spacing 0.25s ease;
+  }
+  .meta a:hover {
+    color: var(--paper);
+    letter-spacing: 0.2em;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(52px); filter: blur(8px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
+  @media (max-height: 560px) {
+    .mission { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="orbit orbit-a"></div>
+  <div class="orbit orbit-b"></div>
+
+  <main>
+    <header class="brand">
+      <svg class="mark" role="img" aria-label="King Jesus Ministry" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0.00 0.00 967.00 944.00">
+<path fill="currentColor" d="
+  M 936.13 468.00
+  A 456.13 456.13 0.0 0 1 480.00 924.13
+  A 456.13 456.13 0.0 0 1 23.87 468.00
+  A 456.13 456.13 0.0 0 1 480.00 11.87
+  A 456.13 456.13 0.0 0 1 936.13 468.00
+  Z
+  M 783.53 468.00
+  A 303.53 303.53 0.0 0 0 480.00 164.47
+  A 303.53 303.53 0.0 0 0 176.47 468.00
+  A 303.53 303.53 0.0 0 0 480.00 771.53
+  A 303.53 303.53 0.0 0 0 783.53 468.00
+  Z"
+/>
+<path fill="currentColor" d="
+  M 503.48 420.04
+  A 0.14 0.13 -25.9 0 1 503.39 420.29
+  C 489.33 417.28 474.55 409.26 467.90 396.55
+  Q 461.97 385.21 463.13 372.23
+  Q 464.38 358.29 470.37 344.81
+  Q 475.93 332.32 479.10 323.88
+  C 487.76 300.85 492.70 275.81 488.65 252.04
+  Q 483.63 222.48 459.71 203.53
+  Q 449.38 195.35 435.63 189.62
+  A 0.19 0.19 0.0 0 1 435.67 189.25
+  Q 455.79 185.84 480.00 185.64
+  C 495.74 185.51 508.52 193.97 514.33 208.45
+  C 524.15 232.95 521.42 260.94 514.61 287.18
+  C 508.15 312.07 497.93 336.27 486.78 360.00
+  Q 483.26 367.50 481.59 378.24
+  C 478.88 395.70 487.46 412.62 503.48 420.04
+  Z"
+/>
+<path fill="currentColor" d="
+  M 644.04 239.05
+  Q 691.31 273.04 721.16 322.36
+  Q 755.70 379.44 761.03 447.01
+  Q 761.13 448.35 761.67 460.52
+  Q 761.97 467.38 761.72 474.05
+  Q 761.22 487.31 761.08 489.01
+  Q 754.67 567.53 710.28 630.52
+  Q 680.98 672.09 638.10 701.33
+  Q 578.85 741.71 504.40 748.91
+  Q 501.51 749.19 490.70 749.72
+  Q 482.74 750.11 476.91 749.97
+  Q 378.17 747.73 303.05 686.95
+  C 271.92 661.76 245.80 629.13 227.78 592.63
+  Q 195.76 527.77 198.99 453.50
+  Q 201.42 397.52 225.75 346.74
+  Q 241.50 313.88 264.46 286.72
+  Q 306.09 237.48 364.98 210.91
+  A 0.42 0.41 70.1 0 1 365.55 211.18
+  Q 366.04 212.96 367.00 215.60
+  C 370.99 226.53 369.30 239.08 366.43 250.44
+  Q 363.34 262.68 359.14 273.89
+  C 353.02 290.26 347.59 304.74 343.63 320.43
+  Q 339.16 338.14 340.24 353.75
+  C 343.37 399.08 391.22 419.52 428.13 430.60
+  A 0.53 0.53 0.0 0 1 428.25 431.57
+  Q 427.20 432.19 426.06 432.53
+  Q 411.39 436.95 397.72 434.58
+  C 389.39 433.14 378.76 428.56 370.71 426.30
+  C 357.92 422.70 343.93 420.57 331.64 424.11
+  C 314.32 429.11 309.41 443.83 311.30 460.25
+  Q 312.02 466.50 312.04 468.48
+  Q 312.10 477.86 307.93 485.47
+  A 0.40 0.40 0.0 0 0 308.47 486.02
+  Q 314.91 482.70 318.93 481.13
+  C 335.98 474.46 348.01 480.74 361.34 491.47
+  Q 366.51 495.62 373.59 501.78
+  Q 381.38 508.55 385.91 510.43
+  Q 395.99 514.63 407.15 511.89
+  Q 410.13 511.16 417.96 506.85
+  Q 438.65 495.49 462.65 492.11
+  Q 485.89 488.84 509.59 494.43
+  Q 547.98 503.47 575.54 533.09
+  C 579.46 537.29 582.37 541.17 585.52 545.42
+  A 0.74 0.74 0.0 0 0 586.40 545.65
+  Q 621.70 530.34 644.57 497.58
+  Q 648.98 491.27 650.56 486.48
+  Q 651.62 483.27 652.48 476.01
+  Q 653.78 464.94 657.34 455.32
+  C 663.74 438.05 673.05 421.21 682.90 404.87
+  A 0.79 0.79 0.0 0 0 682.47 403.72
+  Q 680.34 403.03 678.12 404.63
+  Q 660.52 417.26 645.59 427.30
+  Q 629.43 438.19 612.93 444.68
+  Q 605.21 447.71 596.51 448.77
+  C 586.80 449.95 576.24 446.40 572.59 436.64
+  Q 567.40 422.74 576.09 409.99
+  C 582.70 400.29 587.68 396.13 599.70 383.70
+  C 609.90 373.15 620.62 360.63 628.00 347.99
+  C 639.23 328.79 646.03 307.15 647.27 284.69
+  Q 647.53 280.03 647.38 275.81
+  Q 646.72 257.15 643.70 239.26
+  A 0.22 0.22 0.0 0 1 644.04 239.05
+  Z
+  M 467.66 728.03
+  L 467.66 727.19
+  A 0.70 0.70 0.0 0 1 468.19 726.51
+  Q 470.97 725.81 473.30 726.70
+  Q 474.95 727.32 474.44 728.11
+  A 0.54 0.54 0.0 0 0 474.89 728.94
+  L 477.06 728.94
+  A 0.59 0.58 -0.9 0 0 477.65 728.34
+  Q 477.64 728.02 477.64 727.96
+  A 1.21 1.18 -10.0 0 1 478.32 727.01
+  Q 481.11 725.69 484.94 726.30
+  A 0.62 0.62 0.0 0 1 485.43 727.12
+  Q 484.74 729.08 485.38 729.03
+  Q 486.62 728.93 487.02 728.39
+  C 488.80 726.01 493.27 725.27 496.25 725.27
+  A 0.46 0.46 0.0 0 1 496.58 726.06
+  L 496.39 726.25
+  A 0.42 0.41 12.4 0 0 496.83 726.93
+  L 505.72 723.71
+  A 0.27 0.27 0.0 0 0 505.90 723.47
+  Q 505.93 722.82 505.25 722.62
+  A 0.77 0.70 -62.3 0 1 504.94 721.43
+  Q 508.36 717.11 513.27 715.97
+  A 1.11 1.10 -44.8 0 0 513.28 713.82
+  Q 511.21 713.33 512.34 710.99
+  Q 515.09 705.28 521.47 703.72
+  A 0.90 0.89 39.3 0 0 521.29 701.96
+  C 518.88 701.85 517.64 699.67 518.28 697.32
+  Q 519.02 694.63 519.39 694.14
+  Q 522.65 689.87 527.67 687.82
+  A 0.63 0.63 0.0 0 0 527.53 686.62
+  Q 522.35 685.82 522.60 680.50
+  A 0.42 0.42 0.0 0 0 522.18 680.06
+  L 521.42 680.06
+  A 0.47 0.47 0.0 0 0 520.95 680.49
+  C 520.56 685.18 514.14 688.03 509.97 688.32
+  Q 504.67 688.70 502.44 684.41
+  A 2.82 2.80 -63.2 0 1 502.15 683.52
+  C 500.63 672.78 518.17 666.75 521.48 676.78
+  A 1.51 1.46 -49.9 0 1 521.53 677.52
+  L 521.38 678.30
+  A 0.55 0.55 0.0 0 0 521.92 678.95
+  L 522.43 678.95
+  A 0.62 0.62 0.0 0 0 523.04 678.42
+  C 523.66 674.15 528.75 670.57 532.51 669.33
+  A 0.73 0.73 0.0 0 0 532.26 667.91
+  Q 528.34 667.98 526.27 664.32
+  C 520.39 653.87 540.04 640.17 543.95 653.37
+  A 1.09 1.09 0.0 0 0 546.05 653.31
+  Q 547.31 648.01 552.75 644.73
+  A 0.64 0.64 0.0 0 0 552.55 643.56
+  C 543.93 641.66 545.02 630.05 549.39 624.93
+  C 553.08 620.63 559.65 621.49 561.16 627.28
+  A 0.98 0.98 0.0 0 0 563.08 627.08
+  C 563.24 623.86 565.61 618.33 569.31 617.59
+  C 571.97 617.06 573.85 620.26 574.51 622.45
+  A 0.80 0.80 0.0 0 0 576.08 622.24
+  C 576.15 619.37 576.80 614.63 579.39 612.96
+  C 581.88 611.35 583.60 615.43 583.93 617.16
+  A 0.88 0.87 89.0 0 0 584.64 617.85
+  L 584.72 617.86
+  A 0.53 0.53 0.0 0 0 585.34 617.28
+  Q 584.88 613.25 586.20 608.88
+  A 1.61 1.55 -10.7 0 1 586.79 608.05
+  Q 587.85 607.27 588.02 605.97
+  A 0.74 0.74 0.0 0 0 587.08 605.17
+  Q 586.46 605.34 585.87 606.11
+  A 0.56 0.56 0.0 0 1 585.06 606.19
+  Q 583.08 604.43 583.05 602.79
+  A 0.73 0.73 0.0 0 0 582.32 602.07
+  L 581.53 602.07
+  A 0.49 0.48 -9.4 0 0 581.07 602.71
+  C 581.77 604.77 581.59 608.57 580.28 610.42
+  C 578.39 613.09 575.91 611.52 574.75 609.28
+  C 572.72 605.39 570.08 596.58 573.43 592.84
+  A 2.05 2.01 -54.2 0 1 575.94 592.41
+  Q 578.41 593.80 579.16 596.34
+  A 0.93 0.93 0.0 0 0 580.05 597.00
+  L 580.38 597.00
+  A 0.56 0.56 0.0 0 0 580.92 596.27
+  Q 579.71 592.45 580.35 588.30
+  A 1.08 0.97 -67.1 0 1 581.97 587.53
+  Q 582.34 587.84 583.30 587.99
+  A 0.33 0.32 84.4 0 0 583.65 587.56
+  L 580.07 577.67
+  A 1.03 1.02 -9.6 0 0 579.10 576.99
+  L 578.81 576.99
+  A 0.45 0.45 0.0 0 0 578.41 577.64
+  Q 579.90 580.62 579.92 583.71
+  A 1.25 1.25 0.0 0 1 577.76 584.58
+  Q 572.80 579.35 570.89 571.61
+  Q 570.38 569.56 571.37 568.79
+  A 0.87 0.86 43.7 0 1 572.41 568.77
+  Q 574.70 570.39 576.35 573.52
+  A 0.26 0.24 83.2 0 0 576.50 573.65
+  L 577.54 573.97
+  A 0.32 0.32 0.0 0 0 577.92 573.51
+  L 571.30 561.41
+  A 1.00 0.85 9.5 0 0 571.09 561.16
+  Q 565.74 556.65 561.52 550.29
+  A 3.03 3.03 0.0 0 1 561.13 549.45
+  L 560.66 547.84
+  A 0.96 0.96 0.0 0 0 560.42 547.44
+  L 556.88 543.90
+  A 0.79 0.71 -17.0 0 0 556.43 543.69
+  C 553.73 543.39 548.01 537.99 545.85 535.88
+  A 1.13 1.12 28.3 0 1 545.53 534.82
+  Q 545.58 534.57 545.58 534.56
+  A 1.26 1.23 -70.9 0 0 545.08 533.50
+  Q 529.93 522.24 512.95 516.86
+  C 447.38 496.08 378.86 540.81 371.95 609.21
+  C 367.56 652.64 388.72 692.65 426.42 714.92
+  A 2.01 1.98 58.6 0 0 427.54 715.20
+  C 430.58 715.08 432.68 716.90 434.78 718.97
+  A 3.03 2.85 77.7 0 0 435.61 719.54
+  Q 445.57 724.10 456.67 726.54
+  A 0.63 0.61 -52.9 0 0 457.11 726.47
+  L 458.38 725.74
+  A 0.85 0.81 -56.1 0 1 458.89 725.63
+  Q 462.30 726.04 464.26 727.78
+  Q 464.50 727.99 467.14 728.47
+  A 0.45 0.44 -85.1 0 0 467.66 728.03
+  Z
+  M 586.03 636.35
+  Q 586.40 632.91 588.06 629.94
+  A 0.62 0.61 40.5 0 0 588.00 629.27
+  Q 585.77 626.44 586.03 624.72
+  A 0.49 0.48 4.5 0 0 585.55 624.16
+  L 585.22 624.16
+  A 0.61 0.61 0.0 0 0 584.61 624.80
+  Q 584.79 628.52 582.40 633.17
+  A 0.50 0.50 0.0 0 0 582.56 633.82
+  Q 584.02 634.82 584.04 636.31
+  A 0.59 0.58 -0.5 0 0 584.63 636.88
+  L 585.44 636.88
+  A 0.60 0.59 -86.7 0 0 586.03 636.35
+  Z
+  M 572.16 639.13
+  Q 574.45 639.67 574.95 642.42
+  A 0.65 0.65 0.0 0 0 576.19 642.57
+  L 579.58 634.91
+  A 0.32 0.31 29.5 0 0 579.47 634.52
+  Q 576.70 632.55 577.09 631.12
+  A 0.66 0.66 0.0 0 0 576.72 630.34
+  L 576.16 630.09
+  A 0.83 0.83 0.0 0 0 574.99 630.82
+  Q 574.84 634.71 571.80 637.92
+  A 0.73 0.73 0.0 0 0 572.16 639.13
+  Z
+  M 563.24 633.49
+  A 0.64 0.64 0.0 0 0 561.98 633.55
+  Q 561.22 638.87 556.61 642.50
+  A 0.72 0.72 0.0 0 0 556.84 643.75
+  Q 560.16 644.76 561.35 647.85
+  A 0.87 0.87 0.0 0 0 563.00 647.80
+  Q 564.15 644.18 567.19 640.80
+  A 1.15 1.15 0.0 0 0 567.00 639.08
+  Q 564.08 637.04 563.24 633.49
+  Z
+  M 580.86 656.41
+  A 0.60 0.60 0.0 0 0 581.97 656.74
+  Q 584.41 653.01 584.40 648.74
+  A 0.66 0.65 57.0 0 0 583.15 648.47
+  L 581.02 653.27
+  A 1.96 1.92 -33.8 0 0 580.86 654.04
+  L 580.86 656.41
+  Z
+  M 573.16 661.55
+  L 575.74 657.08
+  A 1.21 1.20 46.7 0 0 575.77 655.94
+  Q 575.31 655.04 575.12 653.79
+  A 0.66 0.66 0.0 0 0 573.90 653.56
+  L 571.05 658.49
+  A 1.28 1.28 0.0 0 0 571.05 659.77
+  L 572.08 661.55
+  A 0.62 0.62 0.0 0 0 573.16 661.55
+  Z
+  M 562.09 658.05
+  A 0.94 0.94 0.0 0 0 560.27 657.82
+  Q 559.09 661.18 555.94 663.31
+  A 0.98 0.96 34.9 0 0 556.27 665.05
+  Q 557.59 665.40 557.94 666.66
+  A 1.08 1.04 49.9 0 0 559.93 666.86
+  Q 560.83 664.83 563.12 662.57
+  A 1.54 1.54 0.0 0 0 563.27 660.54
+  Q 562.18 659.11 562.09 658.05
+  Z
+  M 542.85 673.08
+  Q 544.87 668.88 549.32 666.09
+  A 0.64 0.64 0.0 0 0 549.22 664.96
+  Q 545.52 663.42 545.33 659.52
+  A 0.68 0.68 0.0 0 0 544.02 659.31
+  C 543.12 661.75 539.93 666.82 536.93 666.97
+  A 0.98 0.98 0.0 0 0 536.84 668.92
+  Q 540.41 669.46 541.48 672.98
+  A 0.74 0.74 0.0 0 0 542.85 673.08
+  Z
+  M 566.02 677.15
+  Q 565.60 677.64 565.14 678.12
+  A 0.94 0.86 -19.7 0 0 564.91 678.56
+  L 564.69 679.69
+  A 0.69 0.69 0.0 0 0 565.92 680.22
+  Q 567.13 678.59 567.34 678.34
+  Q 567.75 677.85 568.21 677.37
+  A 0.94 0.86 -19.7 0 0 568.44 676.93
+  L 568.66 675.80
+  A 0.69 0.69 0.0 0 0 567.43 675.27
+  Q 566.22 676.90 566.02 677.15
+  Z
+  M 551.89 685.14
+  A 0.81 0.81 0.0 0 0 553.22 685.40
+  L 556.98 681.64
+  A 1.05 1.04 -37.6 0 0 557.15 680.38
+  L 555.97 678.32
+  A 0.41 0.41 0.0 0 0 555.33 678.24
+  L 551.07 682.50
+  A 1.02 1.02 0.0 0 0 551.06 683.93
+  Q 551.62 684.50 551.89 685.14
+  Z
+  M 541.25 679.98
+  A 0.54 0.54 0.0 0 0 540.27 679.64
+  Q 537.12 684.29 532.37 686.20
+  A 0.57 0.57 0.0 0 0 532.47 687.29
+  Q 535.19 687.84 536.01 690.43
+  A 0.81 0.81 0.0 0 0 537.35 690.76
+  L 543.50 684.61
+  A 0.51 0.51 0.0 0 0 543.37 683.79
+  Q 541.06 682.63 541.25 679.98
+  Z
+  M 559.3240 691.4895
+  A 4.24 0.98 -46.4 0 0 555.6903 693.8842
+  A 4.24 0.98 -46.4 0 0 553.4760 697.6305
+  A 4.24 0.98 -46.4 0 0 557.1097 695.2358
+  A 4.24 0.98 -46.4 0 0 559.3240 691.4895
+  Z
+  M 542.67 701.99
+  A 0.22 0.22 0.0 0 0 543.03 702.16
+  L 547.94 698.11
+  A 1.37 1.37 0.0 0 0 548.43 697.06
+  L 548.43 695.18
+  A 0.28 0.27 75.0 0 0 548.02 694.94
+  L 541.92 698.47
+  A 0.67 0.67 0.0 0 0 541.79 699.54
+  Q 542.70 700.40 542.67 701.99
+  Z
+  M 534.04 696.39
+  C 531.64 698.48 529.70 700.71 526.57 701.46
+  A 0.84 0.84 0.0 0 0 526.64 703.10
+  Q 528.87 703.45 528.40 705.37
+  A 0.64 0.64 0.0 0 0 529.49 705.97
+  Q 532.47 702.84 536.47 700.89
+  A 0.68 0.67 39.2 0 0 536.34 699.63
+  Q 534.62 699.18 534.91 696.85
+  A 0.53 0.53 0.0 0 0 534.04 696.39
+  Z
+  M 530.19 714.74
+  A 0.09 0.08 -9.4 0 0 530.32 714.83
+  L 537.64 710.16
+  A 1.21 1.17 79.9 0 0 538.16 709.39
+  L 538.47 707.81
+  A 0.49 0.49 0.0 0 0 537.67 707.35
+  Q 534.44 710.16 531.04 711.56
+  A 0.54 0.50 86.3 0 0 530.73 711.94
+  L 530.19 714.74
+  Z
+  M 518.51 715.37
+  A 0.44 0.44 0.0 0 1 518.90 715.71
+  Q 519.13 716.65 518.21 717.34
+  A 0.32 0.32 0.0 0 0 518.39 717.92
+  Q 518.79 717.94 519.17 717.66
+  Q 523.23 714.72 527.06 713.31
+  A 0.74 0.74 0.0 0 0 527.53 712.51
+  Q 527.44 711.92 526.62 711.73
+  A 0.46 0.46 0.0 0 1 526.30 711.09
+  L 526.91 709.72
+  A 0.48 0.48 0.0 0 0 526.13 709.18
+  Q 522.49 712.77 517.69 714.00
+  A 0.84 0.79 74.0 0 0 517.15 715.05
+  Q 517.21 715.26 518.51 715.37
+  Z
+  M 525.7783 717.6160
+  A 1.73 0.75 -38.8 0 0 523.9600 718.1155
+  A 1.73 0.75 -38.8 0 0 523.0817 719.7840
+  A 1.73 0.75 -38.8 0 0 524.9000 719.2845
+  A 1.73 0.75 -38.8 0 0 525.7783 717.6160
+  Z
+  M 516.58 721.54
+  Q 516.08 720.61 516.79 719.52
+  A 0.36 0.36 0.0 0 0 516.28 719.04
+  Q 512.56 721.76 507.83 722.68
+  A 0.61 0.61 0.0 0 0 507.33 723.28
+  L 507.33 724.44
+  A 0.47 0.47 0.0 0 0 507.96 724.88
+  Q 510.42 724.01 514.44 722.46
+  C 515.11 722.20 515.88 722.43 516.19 722.36
+  A 0.57 0.57 0.0 0 0 516.58 721.54
+  Z"
+/>
+<path fill="currentColor" d="
+  M 332.05 452.20
+  C 331.79 455.31 331.34 458.61 327.83 459.55
+  Q 326.21 459.98 324.99 459.03
+  A 2.27 2.04 33.6 0 1 324.29 456.33
+  Q 325.69 453.71 328.39 454.85
+  A 1.70 1.69 26.1 0 0 330.51 454.13
+  L 331.69 452.09
+  A 0.19 0.19 0.0 0 1 332.05 452.20
+  Z"
+/>
+<path fill="currentColor" d="
+  M 484.10 516.21
+  A 0.28 0.28 0.0 0 1 483.82 515.93
+  L 483.82 515.03
+  A 0.29 0.29 0.0 0 1 484.17 514.75
+  Q 485.40 515.05 485.88 514.41
+  Q 486.37 513.76 486.74 514.01
+  Q 487.08 514.24 487.23 514.46
+  A 0.68 0.68 0.0 0 0 487.85 514.77
+  Q 489.44 514.67 490.26 514.90
+  A 0.17 0.16 57.9 0 1 490.20 515.22
+  Q 490.09 515.19 489.83 514.95
+  A 0.24 0.24 0.0 0 0 489.55 514.93
+  Q 489.27 515.10 489.21 515.56
+  A 0.74 0.73 -86.5 0 1 488.48 516.21
+  L 484.10 516.21
+  Z"
+/>
+<path fill="currentColor" d="
+  M 482.24 515.87
+  C 482.37 515.87 482.50 515.87 482.63 515.87
+  C 482.55 515.90 482.33 515.88 482.24 515.87
+  Z"
+/>
+<path fill="currentColor" d="
+  M 483.76 516.79
+  Q 483.85 517.05 483.73 517.18
+  Q 483.52 516.93 483.52 516.85
+  A 0.13 0.12 -58.1 0 1 483.76 516.79
+  Z"
+/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(512.05,518.57) rotate(-164.9)" rx="3.76" ry="0.33"/>
+<path fill="currentColor" d="
+  M 503.28 520.24
+  Q 503.52 519.49 505.13 520.73
+  A 0.53 0.53 0.0 0 0 505.93 520.54
+  Q 506.42 519.54 505.49 519.02
+  A 0.24 0.23 58.2 0 1 505.59 518.58
+  Q 506.15 518.56 506.34 519.18
+  Q 506.54 519.79 506.83 519.61
+  Q 507.18 519.39 507.22 519.37
+  A 0.86 0.84 -49.1 0 1 507.94 519.31
+  L 514.36 521.73
+  A 0.36 0.35 -68.3 0 1 514.56 522.20
+  L 514.42 522.50
+  A 0.13 0.13 0.0 0 1 514.26 522.57
+  L 508.68 520.50
+  A 0.53 0.53 0.0 0 0 507.97 520.93
+  L 507.95 521.03
+  A 0.80 0.79 13.4 0 0 508.49 521.90
+  Q 510.59 522.62 512.37 523.81
+  A 0.42 0.42 0.0 0 1 511.96 524.55
+  L 503.53 520.80
+  A 0.46 0.45 -69.6 0 1 503.28 520.24
+  Z"
+/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(504.56,523.65) rotate(-152.2)" rx="4.98" ry="0.70"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(500.20,524.88) rotate(-147.3)" rx="4.45" ry="0.85"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(494.86,525.94) rotate(-139.8)" rx="3.83" ry="0.97"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(488.54,526.57) rotate(-128.9)" rx="2.91" ry="1.10"/>
+<path fill="currentColor" d="
+  M 532.46 526.83
+  Q 535.87 528.67 537.40 529.74
+  A 0.41 0.41 0.0 0 1 537.00 530.45
+  Q 534.21 529.22 531.91 527.97
+  Q 528.50 526.13 526.97 525.07
+  A 0.41 0.41 0.0 0 1 527.37 524.36
+  Q 530.16 525.59 532.46 526.83
+  Z"
+/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(481.97,526.88) rotate(-108.6)" rx="2.05" ry="1.06"/>
+<path fill="currentColor" d="
+  M 475.94 527.85
+  A 0.89 0.75 70.8 0 1 474.56 527.03
+  Q 474.72 526.04 475.51 525.39
+  A 0.39 0.39 0.0 0 1 476.14 525.64
+  Q 476.36 527.22 475.94 527.85
+  Z"
+/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(530.31,530.15) rotate(-149.8)" rx="6.56" ry="0.97"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(526.84,532.79) rotate(-147.5)" rx="6.60" ry="1.29"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(521.54,535.16) rotate(-143.8)" rx="6.38" ry="1.59"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(514.48,537.24) rotate(-139.1)" rx="5.86" ry="1.95"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(505.69,538.87) rotate(-133.9)" rx="5.21" ry="2.30"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(495.45,540.03) rotate(-125.0)" rx="4.40" ry="2.52"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(484.73,540.52) rotate(-107.6)" rx="3.60" ry="2.45"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(474.07,540.48) rotate(-83.0)" rx="3.00" ry="2.04"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(463.56,539.82) rotate(-61.5)" rx="2.30" ry="1.34"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(453.59,538.71) rotate(-47.3)" rx="1.30" ry="0.59"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(548.32,543.08) rotate(-139.8)" rx="7.44" ry="1.60"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(543.79,546.64) rotate(-137.7)" rx="7.58" ry="2.18"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(536.63,549.87) rotate(-135.1)" rx="7.46" ry="2.80"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(527.07,552.59) rotate(-132.5)" rx="7.09" ry="3.34"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(515.22,554.82) rotate(-129.3)" rx="6.57" ry="3.89"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(501.50,556.33) rotate(-122.9)" rx="5.88" ry="4.15"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(445.23,554.55) rotate(-52.6)" rx="2.78" ry="1.69"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(487.09,557.02) rotate(-106.4)" rx="5.05" ry="4.04"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(563.59,558.90) rotate(-128.1)" rx="8.33" ry="2.15"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(458.62,556.10) rotate(-62.2)" rx="3.78" ry="2.75"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(472.79,556.95) rotate(-81.1)" rx="4.41" ry="3.55"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(558.01,563.18) rotate(-126.9)" rx="8.44" ry="3.10"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(549.28,567.10) rotate(-126.2)" rx="8.44" ry="4.03"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(537.62,570.44) rotate(-125.3)" rx="8.22" ry="4.86"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(523.23,573.09) rotate(-124.4)" rx="7.75" ry="5.53"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(423.11,570.23) rotate(-53.9)" rx="2.67" ry="1.69"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(506.53,574.94) rotate(-122.3)" rx="7.14" ry="5.81"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(438.04,572.89) rotate(-56.6)" rx="4.10" ry="2.97"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(489.01,575.80) rotate(-108.8)" rx="6.41" ry="5.62"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(454.39,574.73) rotate(-64.9)" rx="5.04" ry="4.10"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(471.60,575.73) rotate(-81.3)" rx="5.71" ry="5.04"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(568.99,581.65) rotate(-115.2)" rx="9.19" ry="3.89"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(559.07,586.11) rotate(-114.5)" rx="9.25" ry="5.18"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(545.80,589.93) rotate(-114.4)" rx="9.08" ry="6.25"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(400.46,585.90) rotate(-59.0)" rx="1.85" ry="1.11"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(529.35,592.95) rotate(-117.8)" rx="8.72" ry="7.12"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(415.33,589.76) rotate(-62.9)" rx="3.71" ry="2.74"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(510.38,595.07) rotate(-119.9)" rx="8.21" ry="7.42"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(432.34,592.73) rotate(-64.1)" rx="5.09" ry="4.22"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(490.43,596.06) rotate(-108.9)" rx="7.52" ry="7.09"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(450.96,594.84) rotate(-67.3)" rx="6.06" ry="5.40"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(470.59,595.96) rotate(-82.0)" rx="6.80" ry="6.44"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(565.81,606.84) rotate(-100.2)" rx="10.07" ry="5.99"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(551.37,611.00) rotate(-99.1)" rx="9.89" ry="7.44"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(393.52,606.67) rotate(-78.3)" rx="2.67" ry="1.85"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(533.54,614.29) rotate(-99.1)" rx="9.54" ry="8.51"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(409.66,610.86) rotate(-79.9)" rx="4.55" ry="3.68"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(513.00,616.56) rotate(-101.6)" rx="9.00" ry="8.75"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(428.19,614.09) rotate(-79.8)" rx="5.81" ry="5.16"/>
+<circle fill="currentColor" cx="491.27" cy="617.66" r="8.37"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(448.45,616.38) rotate(-80.0)" rx="6.85" ry="6.48"/>
+<circle fill="currentColor" cx="469.79" cy="617.60" r="7.60"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(389.76,628.49) rotate(-96.2)" rx="3.42" ry="2.32"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(535.47,636.35) rotate(-67.5)" rx="10.40" ry="9.09"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(406.60,632.78) rotate(-99.6)" rx="5.16" ry="4.12"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(514.10,638.75) rotate(-44.4)" rx="9.96" ry="9.34"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(425.87,636.19) rotate(-107.2)" rx="6.39" ry="5.70"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(491.57,639.86) rotate(-21.4)" rx="9.22" ry="8.87"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(446.93,638.55) rotate(-118.2)" rx="7.43" ry="7.08"/>
+<circle fill="currentColor" cx="469.14" cy="639.76" r="8.25"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(389.58,650.40) rotate(-111.1)" rx="3.86" ry="2.34"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(406.37,654.71) rotate(-117.9)" rx="5.46" ry="4.02"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(513.67,660.42) rotate(-32.3)" rx="10.44" ry="8.94"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(425.59,658.05) rotate(-128.9)" rx="6.68" ry="5.55"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(491.21,661.63) rotate(-16.1)" rx="9.56" ry="8.63"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(446.64,660.36) rotate(-144.2)" rx="7.62" ry="6.87"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(468.80,661.54) rotate(-171.2)" rx="8.59" ry="7.94"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(392.89,670.52) rotate(-124.9)" rx="3.90" ry="2.01"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(409.00,674.63) rotate(-131.0)" rx="5.40" ry="3.43"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(427.39,677.78) rotate(-140.2)" rx="6.57" ry="4.83"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(447.49,679.98) rotate(-154.1)" rx="7.48" ry="6.07"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(490.17,681.15) rotate(-12.3)" rx="9.33" ry="7.59"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(468.71,681.16) rotate(-173.5)" rx="8.40" ry="6.99"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(399.45,688.14) rotate(-132.7)" rx="3.78" ry="1.47"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(414.17,691.88) rotate(-138.2)" rx="5.13" ry="2.66"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(508.40,696.83) rotate(-23.7)" rx="9.52" ry="6.29"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(431.07,694.83) rotate(-145.6)" rx="6.11" ry="3.85"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(449.49,696.81) rotate(-157.4)" rx="6.89" ry="4.94"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(488.63,697.86) rotate(-11.0)" rx="8.53" ry="6.24"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(468.94,697.84) rotate(-174.1)" rx="7.70" ry="5.79"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(421.67,706.23) rotate(-144.3)" rx="4.64" ry="1.80"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(436.36,708.74) rotate(-149.7)" rx="5.40" ry="2.74"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(503.87,710.45) rotate(-21.9)" rx="8.34" ry="4.60"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(452.45,710.48) rotate(-159.0)" rx="5.99" ry="3.66"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(486.58,711.39) rotate(-10.1)" rx="7.34" ry="4.73"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(469.43,711.39) rotate(-174.4)" rx="6.57" ry="4.39"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(443.08,719.14) rotate(-154.0)" rx="4.46" ry="1.57"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(498.38,720.54) rotate(-19.3)" rx="6.80" ry="2.84"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(456.23,720.57) rotate(-161.3)" rx="4.82" ry="2.31"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(484.19,721.28) rotate(-9.9)" rx="5.82" ry="3.04"/>
+<ellipse fill="currentColor" cx="0.00" cy="0.00" transform="translate(470.11,721.29) rotate(-174.4)" rx="5.15" ry="2.87"/>
+</svg>
+      <span class="brand-name">King Jesus<br>Ministry</span>
+    </header>
+
+    <section class="hero">
+      <h1>Welcome <em>back.</em></h1>
+      <p class="lede">Sign in with your <strong>elreyjesus.org</strong> Google account to continue to Salesforce.</p>
+    </section>
+
+    <footer>
+      <p class="mission">&ldquo;Called to bring the supernatural power of God to this generation.&rdquo;</p>
+      <div class="meta">
+        <span>Authorized staff only</span>
+        <a href="https://kingjesus.org" target="_blank" rel="noopener">kingjesus.org &rarr;</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
